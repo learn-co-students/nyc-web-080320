@@ -12,6 +12,7 @@
 ## Agenda
 
 - Enumerables:
+    - .each
     - .map/.collect
     - .filter/.select
     - .find
