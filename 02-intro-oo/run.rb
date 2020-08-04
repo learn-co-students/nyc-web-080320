@@ -1,8 +1,9 @@
 require 'pry'
+require_relative './app/models/user'
 
 # Pet CLI App
 animals = [
-    {name: "mojo", species: "cat"},
+    {name: "mojo", species: "cat", speak: 'meow!'},
     {name: "appa", species: "dog"},
     {name: "sidney", species: "dog"},
     {name: "rosie", species: "dog"},
@@ -59,7 +60,22 @@ def run
     puts "What is your social security number?"
     ssn = gets.chomp 
     user = User.new(name, age, ssn)
-    binding.pry
+    # binding.pry
+
+    puts "Do you want view your profile? (y/n)"
+    choice = gets.chomp
+    if choice == "y"
+        puts "Your name is #{user.name}"
+        puts "Your age is #{user.age}"
+        # puts "Your ssn is #{user.ssn}"
+    elsif choice == "n"
+        puts "Do you want to change anything in your profile? (y/n)"
+        change = gets.chomp
+        if change == "y"
+            puts "What would you like to change?"
+            user_input = gets.chomp
+        end
+    end
 
 end
 
