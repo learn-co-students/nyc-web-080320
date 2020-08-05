@@ -14,22 +14,27 @@ def run
         ssn = gets.chomp 
         user = User.new(name, age, ssn)
 
+        run
     elsif action == "log in"
-        puts "But how do we find the right user?"
+        puts "What's the user's name?"
+        name_input = gets.chomp
 
+        user = User.all.find do |u| u.name == name_input end
+        user.view_profile
+
+        puts "Do you want to change anything in your profile? (y/n)"
+        change = gets.chomp
+        if change == "y"
+            puts "What would you like to change?"
+            user_input = gets.chomp
+        end
+        
+        binding.pry
         # puts "Do you want view your profile? (y/n)"
         # choice = gets.chomp
         # if choice == "y"
-        #     puts "Your name is #{user.name}"
-        #     puts "Your age is #{user.age}"
-        #     # puts "Your ssn is #{user.ssn}"
+
         # elsif choice == "n"
-        #     puts "Do you want to change anything in your profile? (y/n)"
-        #     change = gets.chomp
-        #     if change == "y"
-        #         puts "What would you like to change?"
-        #         user_input = gets.chomp
-        #     end
         # end
     end
 
