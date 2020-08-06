@@ -1,6 +1,6 @@
 class Animal
     attr_accessor :name, :owner
-    attr_reader :species
+    attr_reader :species, :obedience
     @@all = []
 
     def initialize(name, species, owner=nil)
@@ -10,6 +10,11 @@ class Animal
         @owner = owner
         @obedience = 0
         @@all << self
+    end
+
+    ## STRATEGY: create a setter and make sure it keeps it within range 
+    def obedience=(num)
+        @obedience = num.clamp(0,10)
     end
 
     def self.find_by_name(query)

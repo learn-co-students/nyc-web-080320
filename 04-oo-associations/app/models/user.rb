@@ -40,10 +40,43 @@ class User
     end
 
     ## find all dogs 
-
+    def find_my_dogs
+        self.pets.filter do |a|
+            a.species == "dog"
+        end
+    end
+    
     ## put up for adoption 
+    def put_up_for_adoption(animal_instance)
+        # make sure the animal belongs to the current user 
+        if animal_instance.owner == self
+            # we need to set its user back to nil
+            animal_instance.owner = nil
+            puts "We hope they their forever home soon :( "
+        else
+            puts "You can't put up someone else's animal for adoption! RUDE!"
+        end
+
+    end
 
     ## training 
+    def training(animal_instance)
+        # it is your animal... for now at least
+        if animal_instance.owner == self
+            if animal_instance.species == "dog"  # if its a dog, increase its obedience 
+                animal_instance.obedience += 3
+                puts "Woof woof!"
+            elsif  animal_instance.species == "cat"
+                # if its a cat, do not increase and puts something about it attacking you 
+                puts "Don't you even think about it. MEOOOOW!!"
+                puts "The cats claws come out and you RUN!"
+            else
+                puts "Is that a trainable animal...? Iguanas?"
+            end
+        end
+
+        ## STRATEGY: set a conditional so obedience won't go above ten
+    end
 
 
     private
@@ -53,3 +86,4 @@ class User
     end
 
 end
+

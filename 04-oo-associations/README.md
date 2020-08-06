@@ -28,3 +28,18 @@ Many-to-Many
 - an animal needs to belong to a user
 - an animal needs to know who its user is 
 - an owner should also know who all of its animals are
+
+## How not to pattern match
+- write down your toolbox (the tool & brief description)
+- start pseudocoding ==> get specific (not just build a method that gets me all dogs)
+- look at others peoples code and describe it yourself 
+- DRYness - Do Not Repeat Yourself 
+
+
+
+## Confident, eh?
+- Begin/rescue/end to handle errors
+
+
+### Icebox
+- requiring relative within the same directory 
