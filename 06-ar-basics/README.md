@@ -45,7 +45,25 @@ Persistence == store *in memory* it so it's not temporary just in my console for
 - One to Many
 - Many to Many 
 
+#### Process
+1. Map out your domain
+2. Update table (write your migrations!) and write /update models (if need be)
+3. Test the relationships! 
 
+
+user has many user_animals
+    has many animals through user_animals
+animal has_many to user_animals
+    has many users through user_animals
+
+user_animal belongs to user and belongs to animal
+
+
+Initializers, Readers, and Writers
+
+Object Relationship Methods
+
+Aggregate and Association Methods
 
 
 
@@ -61,6 +79,8 @@ Persistence == store *in memory* it so it's not temporary just in my console for
 - Why didn't that update work? *cause I should've been using .update*
 - Questions about deletion (production best practices)
 - Read only attributes 
-  - create a private reader for that attribute in Ruby that will overwrite the AR reader
   - don't expose that update behavior to the user 
+  - create a private reader for that attribute in Ruby that will overwrite the AR reader
   - attr_readonly (but this fails silently)
+
+- Try this: `rake db:seed:replant`

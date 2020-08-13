@@ -1,29 +1,11 @@
-class Animal
-    attr_accessor :name
-    attr_reader :species
-    @@all = []
+class Animal < ActiveRecord::Base
+    has_many :user_animals
+    has_many :users, through: :user_animals #creates Animal#users
 
-    def initialize(name, species)
-        @name = name
-        @species = species
-        @@all << self
-    end
-
-    def self.all
-        @@all
-    end
-
+    # could leave this method cause it creates a new one ie Animal#owners
     def owners 
         user_animals.map do |ua|
-            ua.owner
-        end
-    end
-
-    private
-
-    def user_animals
-        UserAnimal.all.select do |ua|
-            ua.animal == self
+            ua.user
         end
     end
 

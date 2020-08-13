@@ -1,7 +1,7 @@
 require 'pry'
-require_relative './app/models/user'
-require_relative './app/models/animal'
-require_relative './app/models/user_animal'
+require_relative '../app/models/user'
+require_relative '../app/models/animal'
+require_relative '../app/models/user_animal'
 
 
 hermione = User.new('hermione', 18)

@@ -1,10 +1,6 @@
 class User < ActiveRecord::Base
-
-    def user_animals
-        UserAnimal.all.select do |ua|
-            ua.owner == self
-        end 
-    end
+    has_many :user_animals
+    has_many :animals, through: :user_animals
 
     def pets
         user_animals.map do |ua|
