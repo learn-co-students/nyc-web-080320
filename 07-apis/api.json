@@ -1,0 +1,40 @@
+{
+    "users": [
+        {
+            "name": "Russell",
+            "password": "1234",
+            "age": 21,
+            "ssn": 1234
+        },
+        {
+            "name": "Kain",
+            "password": "1234",
+            "age": 21,
+            "ssn": 1234
+        },
+        {
+            "name": "Alicia",
+            "password": "1234",
+            "age": 21,
+            "ssn": 1234
+        }
+    ],
+    "animals": [
+        {
+            "species": "cat",
+            "name": "Mojo"
+        },
+        {
+            "species": "cat",
+            "name": "Savannah"
+        },
+        {
+            "species": "dog",
+            "name": "Appa"
+        },
+        {
+            "species": "dog",
+            "name": "Sidney"
+        }
+    ]
+}
