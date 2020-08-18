@@ -24,4 +24,21 @@ class RestaurantOwner
         # restaurants.map { |rest| rest.menu_items } ==becomes==> [of restaurant instances]
     end
 
+    def self.average_age
+        # returns the average age of all the RestaurantOwners
+        # self.all.reduce(0) { |sum, restO| sum + (restO.age / self.all.count) }
+        all_ages = self.all.map { |restO| restO.age }
+        all_ages.sum / all_ages.count
+    end
+
+    def sell_restaurant(restaurant, buyer)
+        # transfers ownership of a Restaurant instance 
+        # (which must belong to the current user) to the buyer which is a RestaurantOwner instance.
+        if self.restaurants.include?(restaurant)
+            restaurant.owner = buyer 
+        else
+            puts "You cannot transfer a restaurant that doesn't belong to you, #{self.name}"
+        end
+    end
+
 end

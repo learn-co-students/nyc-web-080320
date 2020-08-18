@@ -12,11 +12,15 @@ class MenuItem
     def self.all
         @@all
     end
-    #HALP!
 
     def owner
         # returns the Owner instance associated with the MenuItem instance
         self.restaurant.owner
+    end
+
+    def self.most_expensive_item
+        # returns the most expensive MenuItem instance
+        self.all.max_by { |mi| mi.price }
     end
 
 end

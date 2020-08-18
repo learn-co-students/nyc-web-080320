@@ -23,4 +23,14 @@ class Restaurant
         menu_items.map { |mi| mi.recipe }
     end
 
+    def has_dish?(recipe)
+        # returns true if the dish is on the menu at the given restaurant and false if it is not.
+        self.recipes.include?(recipe)
+    end
+
+    def self.highest_rated
+        # returns the highest rated Restaurant instance. OPTIONS: reduce, sort_by  & last 
+        self.all.max_by {|rest| rest.star_rating }
+    end
+
 end
