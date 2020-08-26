@@ -1,0 +1,21 @@
+<h1>New Snail</h1>
+
+<%= form_for @snail do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.label :age %>
+  <%= f.number_field :age %>
+
+  <%= f.label :slime_level %>
+  <%= f.number_field :slime_level %>
+  
+  <%= f.submit %>
+
+<% end %>
+
+<%# <form action="/snails" method="POST" > %>
+ <%#  <input type="text" name="snail[name]"> %>
+ <%#  <input type="number" name="snail[age]"> %>
+<%#   <input type="number" name="snail[slime_level]"> %>
+<%#  </form> %>

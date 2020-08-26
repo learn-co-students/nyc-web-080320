@@ -1,0 +1,9 @@
+<h1>Snails#index</h1>
+
+<% @snails.each do |snail| %>
+  <p><%# link_to snail.name, "/snails/#{snail.id}"  %></p>
+  <p><%= link_to snail.name, snail_path(snail.id)  %></p>
+  <p><%# link_to snail.name, snail  %></p>
+<% end %>
+
+
