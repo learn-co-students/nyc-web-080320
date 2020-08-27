@@ -47,7 +47,7 @@ class SnailsController < ApplicationController
   private 
 
   def snail_params
-    params.require(:snail).permit(:name, :age, :slime_level)
+    params.require(:snail).permit(:name, :age, :slime_level, :img_url)
   end 
 
   def find_snail 

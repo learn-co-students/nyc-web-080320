@@ -10,7 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_25_145843) do
+ActiveRecord::Schema.define(version: 2020_08_27_181213) do
+
+  create_table "comments", force: :cascade do |t|
+    t.string "content"
+    t.integer "snail_id"
+    t.integer "snail_snap_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["snail_snap_id"], name: "index_comments_on_snail_snap_id"
+  end
+
+  create_table "snail_snaps", force: :cascade do |t|
+    t.string "img_url"
+    t.string "caption"
+    t.integer "snail_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["snail_id"], name: "index_snail_snaps_on_snail_id"
+  end
 
   create_table "snails", force: :cascade do |t|
     t.string "name"
@@ -18,6 +36,9 @@ ActiveRecord::Schema.define(version: 2020_08_25_145843) do
     t.integer "slime_level"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "img_url"
   end
 
+  add_foreign_key "comments", "snail_snaps"
+  add_foreign_key "snail_snaps", "snails"
 end

@@ -3,11 +3,15 @@
   <%= f.text_field :name %>
 
   <%= f.label :age %>
-  <%= f.number_field :age %>
+  <%= f.number_field :age, id: "test" %>
 
   <%= f.label :slime_level %>
   <%= f.number_field :slime_level %>
+
+  <%= f.label :img_url %>
+  <%= f.text_field :img_url %>
   
   <%= f.submit %>
 
 <% end %>
+
