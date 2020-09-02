@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   resources :comments
   resources :snail_snaps, only: [:new, :create]
 
+  delete '/sessions/reset_page_count', to: 'sessions#reset_page_count', as: 'page_reset'
+
   # get "/snails", to: "snails#index", as: "snails" 
   # get "/snails/new", to: "snails#new", as: "new_snail"
   

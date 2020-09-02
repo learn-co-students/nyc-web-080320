@@ -8,9 +8,14 @@ class SnailsController < ApplicationController
 
   def show 
     # @snail = Snail.find(params[:id])
-
+    if session[:page_count]
+      session[:page_count] = session[:page_count].to_i + 1
+    else 
+      session[:page_count] = 1
+    end 
     # render :show
   end 
+
   
   def new 
     @snail = Snail.new

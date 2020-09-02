@@ -1,5 +1,9 @@
 <div class="show-container">
 
+<% if session[:page_count].to_i <= 3 %>
+
+  <h3><%= 3 - session[:page_count].to_i %> views left</h3>
+
   <% if flash[:success] %>
     <h1><%= flash[:success] %></h1>
   <% end %>
@@ -21,4 +25,13 @@
   |
   <%= link_to "Edit Snail", edit_snail_path(@snail) %>
   <%= button_to "Delete", snail_path(@snail), {method: :delete, data: {confirm: true}} %>
+
+  <% else %>
+    
+    <h1>Show Some Ad</h1>
+    <iframe width="966" height="543" src="https://www.youtube.com/embed/59tGsr3Yfh8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <%= button_to "I Promise I watched this sweet ad", page_reset_path, method: :delete %>
+  <% end%>
+
 </div>
