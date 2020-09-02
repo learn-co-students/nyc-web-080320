@@ -1,4 +1,4 @@
-# (9) Sessions & Cookies
+# (Sessions & Cookies
 ===
 
 ## SWBATs
