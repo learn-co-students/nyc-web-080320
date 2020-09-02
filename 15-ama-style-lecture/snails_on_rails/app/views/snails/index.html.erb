@@ -1,0 +1,21 @@
+<h1>Snails#index</h1>
+<%= link_to "Create Snail", new_snail_path, {id: "link-test"} %>
+
+<%= form_tag snails_path, method: :get  do  %>
+  <%= collection_select :snail, :sort_word, ["asc", "desc"], :itself, :itself %>
+
+  <%= submit_tag "SORT!"%>
+<% end %>
+
+<div class="index-container">
+
+  <% @snails.each do |snail| %>
+    <div class="index-tile">
+      <h3><%= link_to snail.name, snail_path(snail)  %></h3>
+      <img src="<%= snail.img_url %>" alt="<%= snail.name %>" class="index-img">
+    </div>
+  <% end %>
+
+</div>
+
+

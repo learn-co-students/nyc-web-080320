@@ -1,0 +1,24 @@
+<div class="show-container">
+
+  <% if flash[:success] %>
+    <h1><%= flash[:success] %></h1>
+  <% end %>
+
+  <h1>Snail Show</h1>
+
+  <h3><%=@snail.name%></h3>
+  <p>Age: <%=@snail.age%></p>
+  <p>Slim Level: <%=@snail.slime_level%></p>
+  <img src="<%= @snail.img_url %>" alt="<% @snail.img_url%>" class="show-img">
+
+  <h1>MY Snail Snaps</h1>
+  <% @snail.my_snaps.each do |snail_snap| %>
+    <p><%= snail_snap.caption %></p>
+  <% end %>
+
+  <hr>                          
+  <%= link_to "Index Page", snails_path%>
+  |
+  <%= link_to "Edit Snail", edit_snail_path(@snail) %>
+  <%= button_to "Delete", snail_path(@snail), {method: :delete, data: {confirm: true}} %>
+</div>

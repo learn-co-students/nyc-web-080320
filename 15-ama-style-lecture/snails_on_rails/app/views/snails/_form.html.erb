@@ -1,0 +1,33 @@
+<% if flash[:my_errors] %>
+  <% flash[:my_errors].each do |error| %>
+    <p><%= error %></p>
+  <% end %>
+<% end %>
+
+<%= form_for @snail do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.label :age %>
+  <%= f.number_field :age, id: "test" %>
+
+  <%= f.label :slime_level %>
+  <%= f.number_field :slime_level %>
+
+  <%= f.label :img_url %>
+  <%= f.text_field :img_url %>
+
+  <h3>Create Snaps</h3>
+  <%= f.fields_for :my_snaps do |ff|%>
+    <%= ff.label :caption %>
+    <%= ff.text_field :caption %>
+
+    <%= ff.label :img_url %>
+    <%= ff.text_field :img_url %>
+  <% end %>
+  <br>
+  
+  <%= f.submit %>
+
+<% end %>
+
