@@ -1,0 +1,29 @@
+<div class="feed-container">
+  <% @snail_snaps.each do |snap| %>
+    <div class="feed-tile">
+      <h5><img src="<%= snap.snail.img_url %>" alt="<%= snap.snail.name %>" class="feed-profile-pic"> <%= snap.snail.name%></h5>
+      <a href="<%=  %>">
+        <img src="<%= snap.img_url %>" alt="<%= snap.snail.name %>" class="feed-pic">
+      </a>
+
+      
+      <div class="feed-tile-text">
+        <i class="fas fa-heart" style="color:red;"></i>
+        <p><b><%= snap.snail.name %>:</b> <%= snap.caption %></p>
+        <p class="feed-comment-count">View all <%= snap.comments.count %> comments</p>
+
+        <% if snap.comments.count >= 2%>
+          <% snap.comments[0..1].each do |comment|%>
+            <p><b><%= comment.snail.name%> </b><%= comment.content %></p>
+          <% end %>
+        <% end %>
+      </div>
+
+      <%= form_for @comment do |f| %>
+        <%= f.text_field :content, class: "comment-input", placeholder: "Add a comment" %>
+        <%= f.submit "Post", class: "comment-btn" %>
+      <% end %>
+
+    </div>
+  <% end %>
+</div>

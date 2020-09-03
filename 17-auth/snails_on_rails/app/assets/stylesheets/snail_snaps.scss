@@ -1,0 +1,53 @@
+// Place all the styles related to the SnailSnaps controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+
+.feed-container {
+  background-color: #FAFAFA;
+}
+
+.feed-tile {
+  background-color: white;
+  max-width: 400px;
+  margin: 10px auto;
+  border: 0.2px solid black;
+
+}
+
+.feed-tile-text {
+  padding: 10px;
+}
+
+.feed-pic {
+  width: 100%;
+}
+
+.feed-profile-pic {
+  width: 30px;
+  height: 30px;
+  border-radius: 25px;
+}
+
+.feed-comment-count {
+  font-size: 12px;
+  color: lightgray;
+}
+
+.new_comment {
+  margin: 0px, auto;
+}
+
+.comment-input {
+  width: 80%;
+  height: 40px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.comment-btn {
+  width: 18%;
+  height: 40px;
+  margin: 0px;
+  padding: 0px;
+}

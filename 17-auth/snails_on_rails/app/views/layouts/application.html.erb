@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SnailsOnRails</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src="https://kit.fontawesome.com/6c62c7c3c0.js" crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+
+    <div class='banner'>
+      <%= image_tag "logo.png", class: 'banner-img' %>
+    </div>
+
+    <ul class="nav">
+      <li><%= link_to "Snails Index", snails_path %></li>
+      <li><%= link_to "Snap Feed", snail_snaps_path %></li>
+      <li><%= link_to "Create a Snap", new_snail_snap_path %></li>
+
+      <% if @current_snail %>
+        <li class="right"> Welcome <%= @current_snail.name %>!</li>
+        <li class="right"> <%= link_to "logout", logout_path, method: :delete %> </li>
+      <% else %>
+        <li class="right"><%= link_to "Sign-Up", new_snail_path %></li>
+        <li class="right"><%= link_to "Sign-In", new_login_path %></li>
+      <% end %>
+    </ul>
+
+    <%= yield %>
+  </body>
+</html>

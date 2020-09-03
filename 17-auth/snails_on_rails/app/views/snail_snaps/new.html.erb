@@ -1,0 +1,12 @@
+<h1>Create New Snail Snap aka Post</h1>
+
+<%= form_for @snail_snap do |f| %>
+  <%= f.label :caption %>
+  <%= f.text_field :caption %>
+
+  <%= f.label :img_url %>
+  <%= f.text_field :img_url %>
+
+  <%= f.submit %>
+<% end %>
+

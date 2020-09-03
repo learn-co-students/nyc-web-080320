@@ -1,0 +1,12 @@
+<h1>SnailSnap Feed</h1>
+
+<div>
+  <% @snail_snaps.each do |snap| %>
+    <div>
+      <img src="<%= snap.img_url %>" alt="<%= snap.snail.name %>">
+      <h4><%= snap.snail.name %></h4>
+      <p><%= snap.caption %></p>
+      <p class="feed-comment-count">view all <%= snap.comments.count %> comments</p>
+    </div>
+  <% end %>
+</div>
