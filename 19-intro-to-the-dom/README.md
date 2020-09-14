@@ -15,6 +15,13 @@
 - [ ] Use JS to add, remove, and edit DOM nodes
 
 ### The Document Object Model Overview
+
+What is the DOM?
+
+- Document - has to do with the structure of the HTML document
+- Object - turns HTML tags into DOM nodes
+- Model - presents this information as a tree structure
+
 > The DOM is the browser's programmatic representation of the web page (the HTML). This means we can manipulate the DOM using JavaScript to change what we see on the web page.
 
 - What is the DOM?
@@ -83,7 +90,15 @@
 
 
 ```javascript
+ // 1. get the first up-vote `button`
+let button = document.querySelector('.up-vote')
 
+ // 2. get the first `li` element
+let li = document.querySelector('li')
+li.querySelector('span')
+
+// 3. get the `span` from inside the `li` element
+let span = document.querySelector('li span')
 ```
 
   
@@ -94,7 +109,7 @@
   
 
 ```javascript
-
+document.querySelectorAll('li h3')
 ```
 
   - We can also combine selectors for more specificity:
@@ -145,11 +160,13 @@
 
 - Baby sloth - "https://i.ytimg.com/vi/aaqzPMOd_1g/maxresdefault.jpg"
 
+1. get the image from the DOM
+2. change it to show the sloth picture
 
 
 ```javascript
-
-
+let image = document.querySelector('#welcome-image')
+image.src = "https://i.ytimg.com/vi/aaqzPMOd_1g/maxresdefault.jpg"
 ```
 
 - replace the h1 text with "Baby sloths are cool!"
@@ -157,7 +174,7 @@
 
 
 ```javascript
-
+let header = document.querySelector('h1')
 ```
 ---
 
@@ -166,6 +183,10 @@
 
 
 ```javascript
+// jaws.remove()
+
+let jaws = document.querySelector('.movie')
+jaws.parentNode.removeChild(jaws)
 
 ```
 
