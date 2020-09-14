@@ -46,18 +46,19 @@ console.log("Welcome to Mod 3")
   - type checking
   - typeof variable
 
+  - on object can have attributes and behviors
  
  - Number
 
 
  
  - String
-
+ - `Let's interpolate some ${}` - template literal
 
 
 
  - Object Literals
-
+ - { a: 1, b:2 }
 
 
  - Array
@@ -79,11 +80,17 @@ console.log("Welcome to Mod 3")
 */
 
 // function declaration
-
+function sayHi(name){
+  console.log(`Hi there ${name}!`)
+}
 
 // function expression
-
+const sayHello = function(firstName){
+  console.log(`Hello there ${firstName}!`)
+}
 
 // arrow functions
-
+const sayHowdy = firstName => {
+  console.log(`Howdy ${firstName}`)
+}
 
