@@ -175,6 +175,7 @@ image.src = "https://i.ytimg.com/vi/aaqzPMOd_1g/maxresdefault.jpg"
 
 ```javascript
 let header = document.querySelector('h1')
+header.textContent = "Baby sloths are cool!"
 ```
 ---
 
@@ -183,9 +184,10 @@ let header = document.querySelector('h1')
 
 
 ```javascript
+let jaws = document.querySelector('.movie')
+
 // jaws.remove()
 
-let jaws = document.querySelector('.movie')
 jaws.parentNode.removeChild(jaws)
 
 ```
@@ -197,6 +199,31 @@ jaws.parentNode.removeChild(jaws)
 
 ```javascript
 
+const gooniesObj = {
+  title: "The Goonies",
+  imageUrl: "https://i.etsystatic.com/7965399/r/il/e7eaf6/1514626619/il_570xN.1514626619_mvx9.jpg",
+  year: 1984,
+  genre: "Adventure",
+  score: 10,
+}
+
+const gooniesLi = document.createElement('li')
+// gooniesLi.className = "movie"
+gooniesLi.classList.add("movie")
+
+gooniesLi.innerHTML = `
+  <h3>${gooniesObj.title}</h3>
+  <img alt="" src="${gooniesObj.imageUrl}" />
+  <h4>Year: ${gooniesObj.year}</h4>
+  <h4>Genre: ${gooniesObj.genre}</h4>
+  <h4>Score: <span>${gooniesObj.score}</span> </h4>
+  <button class="up-vote">Up Vote</button>
+  <button>Down Vote</button>
+  <button>&times;</button>
+`
+
+const movieList = document.querySelector('#movie-list')
+movieList.append(gooniesLi)
 ```
 
 
