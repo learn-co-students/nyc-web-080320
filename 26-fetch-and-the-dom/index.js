@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function(e){
   
   function renderMovie(movieObj){
     const movieLi = document.createElement('li')
+    movieLi.dataset.movieId = movieObj.id
     movieLi.classList.add("movie")
     movieLi.id = movieObj.title
     
@@ -22,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function(e){
       <h4>Score: <span>${movieObj.score}</span> </h4>
       <button class="up-vote">Up Vote</button>
       <button>Down Vote</button>
-      <button data-purpose="delete">&times;</button>
+      <button data-purpose="delete" >&times;</button>
     `
     
     movieList.prepend(movieLi)
@@ -123,16 +124,43 @@ document.addEventListener("DOMContentLoaded", function(e){
   }
   
   const removeMovie = el => {
-    el.parentElement.remove()
+    const id = el.parentElement.dataset.movieId
+
+    const options = {
+      method: "DELETE"
+    }
+    
+    fetch(baseUrl + id, options)
+    .then(response => response.json())
+    .then(data => {
+      el.parentElement.remove()
+    })
   }
   
   const incrementScore = el => {
     const parentLi = el.parentElement
+    const id = parentLi.dataset.movieId
     const span = parentLi.querySelector('span')
     const currentScore = parseInt(span.textContent)
     const newScore = currentScore + 1
 
-    span.textContent = newScore
+    const options = {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+        "accept": "application/json"
+      },
+      body: JSON.stringify({ score: newScore })
+    }
+    
+    fetch(baseUrl + id, options)
+    .then(response => response.json())
+    .then(movie => {
+      const movieLi = document.querySelector(`[data-movie-id="${movie.id}"]`)
+      const movieSpan = movieLi.querySelector('span')
+      movieSpan.textContent = movie.score
+    })
+    
   }
   
   const getMovies = () => {

@@ -126,40 +126,16 @@
       "year": "1978",
       "genre": "Horror",
       "imageUrl": "https://images-na.ssl-images-amazon.com/images/I/71sLjLJT04L._AC_SL1500_.jpg",
-      "score": 0,
+      "score": 1,
       "id": 22
-    },
-    {
-      "title": "Doctor Sleep",
-      "year": "2019",
-      "genre": "Horror",
-      "imageUrl": "https://images-na.ssl-images-amazon.com/images/I/71-6%2BDIjK0L._AC_SY741_.jpg",
-      "score": 5,
-      "id": 24
-    },
-    {
-      "title": "Babe",
-      "year": "1995",
-      "genre": "Family",
-      "imageUrl": "https://images-na.ssl-images-amazon.com/images/I/51ip3i9RJgL._AC_.jpg",
-      "score": 0,
-      "id": 25
     },
     {
       "title": "Inside Out",
       "year": "2012",
       "genre": "Family",
       "imageUrl": "https://lumiere-a.akamaihd.net/v1/images/rich_insideout_header_mobile_ce11b9a6.jpeg?region=0,0,640,952",
-      "score": 0,
+      "score": 7,
       "id": 26
-    },
-    {
-      "title": "Outside In",
-      "year": "2013",
-      "genre": "Horror",
-      "imageUrl": "https://lumiere-a.akamaihd.net/v1/images/rich_insideout_header_mobile_ce11b9a6.jpeg?region=0,0,640,952",
-      "score": 0,
-      "id": 27
     }
   ]
 }
