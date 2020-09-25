@@ -10,6 +10,14 @@ puts "Destroying movies"
 
 Movie.destroy_all
 
+puts "Destroying actors"
+
+Actor.destroy_all
+
+puts "Destroying movie_actors"
+
+MovieActor.destroy_all
+
 puts "Creating movies"
 
 movies = [
@@ -95,3 +103,18 @@ movies = [
   movies.each do |movie|
     Movie.create!(movie)
   end
+
+
+puts "Creating actors"
+
+keanu = Actor.create!(name: "Keanu Reeves")
+laurence = Actor.create!(name: "Laurence Fishburn")
+carrie_anne = Actor.create!(name: "Carrie-Anne Moss")
+
+puts "Creating movie_actors"
+
+matrix = Movie.find_by(title: "The Matrix")
+
+neo = MovieActor.create!(movie: matrix, actor: keanu, role: "Neo")
+morpheus = MovieActor.create!(movie: matrix, actor: laurence, role: "Morpheus")
+trinity = MovieActor.create!(movie: matrix, actor: carrie_anne, role: "Trinity")

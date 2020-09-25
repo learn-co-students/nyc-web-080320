@@ -1078,3 +1078,604 @@ Processing by Api::V1::MoviesController#create as JSON
 Completed 406 Not Acceptable in 2ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 2115)
 
 
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(6855664872665726250)[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(6855664872665726250)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (146.5ms)[0m  [1m[35mDROP DATABASE IF EXISTS "movies_api_development"[0m
+  [1m[35m (140.3ms)[0m  [1m[35mDROP DATABASE IF EXISTS "movies_api_test"[0m
+  [1m[35m (462.5ms)[0m  [1m[35mCREATE DATABASE "movies_api_development" ENCODING = 'unicode'[0m
+  [1m[35m (316.2ms)[0m  [1m[35mCREATE DATABASE "movies_api_test" ENCODING = 'unicode'[0m
+  [1m[35m (5.7ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (2.8ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(6855664872665726250)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateMovies (20200921145332)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.4ms)[0m  [1m[35mCREATE TABLE "movies" ("id" bigserial primary key, "title" character varying, "year" integer, "score" integer, "imageUrl" character varying, "genre" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200921145332"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateActors (20200921200809)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.7ms)[0m  [1m[35mCREATE TABLE "actors" ("id" bigserial primary key, "name" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200921200809"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateMovieActors (20200921200853)
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (6.0ms)[0m  [1m[35mCREATE TABLE "movie_actors" ("id" bigserial primary key, "actor_id" bigint NOT NULL, "movie_id" bigint NOT NULL, "role" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_0b4046e48d"
+FOREIGN KEY ("actor_id")
+  REFERENCES "actors" ("id")
+, CONSTRAINT "fk_rails_a2d0458e32"
+FOREIGN KEY ("movie_id")
+  REFERENCES "movies" ("id")
+)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_movie_actors_on_actor_id" ON "movie_actors"  ("actor_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_movie_actors_on_movie_id" ON "movie_actors"  ("movie_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200921200853"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2020-09-25 17:18:47.280660"], ["updated_at", "2020-09-25 17:18:47.280660"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(6855664872665726250)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mMovie Load (1.0ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mActor Load (0.6ms)[0m  [1m[34mSELECT "actors".* FROM "actors"[0m
+  [1m[36mMovieActor Load (0.5ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (0.6ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "Jaws"], ["year", 1975], ["score", 19], ["imageUrl", "https://resizing.flixster.com/h8e7W7cVaQhuLdSvABDkJk6r5sc=/206x305/v1.bTsxMTE2NjE5OTtqOzE4MzU0OzEyMDA7ODAwOzEyMDA"], ["genre", "Horror"], ["created_at", "2020-09-25 17:19:24.230243"], ["updated_at", "2020-09-25 17:19:24.230243"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "The Matrix"], ["year", 1999], ["score", 18], ["imageUrl", "https://imgc.allpostersimages.com/img/print/u-g-F4S5W20.jpg?w=550&h=550&p=0"], ["genre", "Science Fiction"], ["created_at", "2020-09-25 17:19:24.233961"], ["updated_at", "2020-09-25 17:19:24.233961"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "The Goonies"], ["year", 1985], ["score", 0], ["imageUrl", "https://images-na.ssl-images-amazon.com/images/I/515DYf99zfL.jpg"], ["genre", "Adventure"], ["created_at", "2020-09-25 17:19:24.236708"], ["updated_at", "2020-09-25 17:19:24.236708"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "Free Willy"], ["year", 1993], ["score", 0], ["imageUrl", "https://upload.wikimedia.org/wikipedia/en/thumb/b/b5/Free_willy.jpg/220px-Free_willy.jpg"], ["genre", "Family"], ["created_at", "2020-09-25 17:19:24.239266"], ["updated_at", "2020-09-25 17:19:24.239266"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "Top Gun"], ["year", 1986], ["score", 0], ["imageUrl", "https://m.media-amazon.com/images/M/MV5BZjQxYTA3ODItNzgxMy00N2Y2LWJlZGMtMTRlM2JkZjI1ZDhhXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_.jpg"], ["genre", "Action"], ["created_at", "2020-09-25 17:19:24.241955"], ["updated_at", "2020-09-25 17:19:24.241955"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "Mean Girls"], ["year", 2004], ["score", 0], ["imageUrl", "https://img01.mgo-images.com/image/thumbnail?id=1MV270609a1c6c89af5538a6d63cea71ed4&ql=70&sizes=310x465"], ["genre", "Comedy"], ["created_at", "2020-09-25 17:19:24.244399"], ["updated_at", "2020-09-25 17:19:24.244399"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "Tron"], ["year", 2980], ["score", 0], ["imageUrl", "https://images-na.ssl-images-amazon.com/images/I/41npElxA48L._AC_.jpg"], ["genre", "Science Fiction"], ["created_at", "2020-09-25 17:19:24.246888"], ["updated_at", "2020-09-25 17:19:24.246888"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "What About Bob?"], ["year", 1991], ["score", 0], ["imageUrl", "https://www.movieartarena.com/imgs/wab.jpg"], ["genre", "Comedy"], ["created_at", "2020-09-25 17:19:24.249427"], ["updated_at", "2020-09-25 17:19:24.249427"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "Working Girl"], ["year", 1987], ["score", 99], ["imageUrl", "https://images-na.ssl-images-amazon.com/images/I/51X9TJrRBCL._AC_.jpg"], ["genre", "Drama"], ["created_at", "2020-09-25 17:19:24.251910"], ["updated_at", "2020-09-25 17:19:24.251910"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "Alien"], ["year", 1979], ["score", 0], ["imageUrl", "https://i.etsystatic.com/14461980/r/il/28c6d5/1417485862/il_570xN.1417485862_le2x.jpg"], ["genre", "Horror"], ["created_at", "2020-09-25 17:19:24.254330"], ["updated_at", "2020-09-25 17:19:24.254330"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "Predator"], ["year", 1986], ["score", 0], ["imageUrl", "https://movieposters2.com/images/1566923-b.jpg"], ["genre", "Horror"], ["created_at", "2020-09-25 17:19:24.256765"], ["updated_at", "2020-09-25 17:19:24.256765"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActor Create (0.4ms)[0m  [1m[32mINSERT INTO "actors" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Keanu Reeves"], ["created_at", "2020-09-25 17:19:24.276502"], ["updated_at", "2020-09-25 17:19:24.276502"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActor Create (0.2ms)[0m  [1m[32mINSERT INTO "actors" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Laurence Fishburn"], ["created_at", "2020-09-25 17:19:24.279646"], ["updated_at", "2020-09-25 17:19:24.279646"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActor Create (0.2ms)[0m  [1m[32mINSERT INTO "actors" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Carrie-Anne Moss"], ["created_at", "2020-09-25 17:19:24.282280"], ["updated_at", "2020-09-25 17:19:24.282280"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mMovie Load (0.2ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."title" = $1 LIMIT $2[0m  [["title", "The Matrix"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovieActor Create (0.8ms)[0m  [1m[32mINSERT INTO "movie_actors" ("actor_id", "movie_id", "role", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["actor_id", 1], ["movie_id", 2], ["role", "Neo"], ["created_at", "2020-09-25 17:19:24.297019"], ["updated_at", "2020-09-25 17:19:24.297019"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovieActor Create (0.3ms)[0m  [1m[32mINSERT INTO "movie_actors" ("actor_id", "movie_id", "role", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["actor_id", 2], ["movie_id", 2], ["role", "Morpheus"], ["created_at", "2020-09-25 17:19:24.300216"], ["updated_at", "2020-09-25 17:19:24.300216"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovieActor Create (0.3ms)[0m  [1m[32mINSERT INTO "movie_actors" ("actor_id", "movie_id", "role", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["actor_id", 3], ["movie_id", 2], ["role", "Trinity"], ["created_at", "2020-09-25 17:19:24.302798"], ["updated_at", "2020-09-25 17:19:24.302798"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/movies" for ::1 at 2020-09-25 13:23:53 -0400
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (No route matches [GET] "/movies"):
+  
+actionpack (6.0.3.3) lib/action_dispatch/middleware/debug_exceptions.rb:36:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.3.3) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.3.3) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.3.3) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.3.3) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.3.3) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.3.3) lib/rails/rack/logger.rb:26:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.3) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.3.3) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.3) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/host_authorization.rb:82:in `call'
+rack-cors (1.1.1) lib/rack/cors.rb:100:in `call'
+railties (6.0.3.3) lib/rails/engine.rb:527:in `call'
+puma (4.3.6) lib/puma/configuration.rb:228:in `call'
+puma (4.3.6) lib/puma/server.rb:713:in `handle_request'
+puma (4.3.6) lib/puma/server.rb:472:in `process_client'
+puma (4.3.6) lib/puma/server.rb:328:in `block in run'
+puma (4.3.6) lib/puma/thread_pool.rb:134:in `block in spawn_thread'
+Started GET "/api/v1/movies" for ::1 at 2020-09-25 13:23:56 -0400
+Processing by Api::V1::MoviesController#index as HTML
+  [1m[36mMovie Load (0.6ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  ↳ app/controllers/api/v1/movies_controller.rb:3:in `sort_by'
+Completed 204 No Content in 142475ms (ActiveRecord: 6.0ms | Allocations: 52353)
+
+
+Started GET "/api/v1/movies" for ::1 at 2020-09-25 13:26:31 -0400
+Processing by Api::V1::MoviesController#index as HTML
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  ↳ app/controllers/api/v1/movies_controller.rb:3:in `sort_by'
+Started GET "/api/v1/movies" for ::1 at 2020-09-25 13:26:38 -0400
+Completed 204 No Content in 194115ms (ActiveRecord: 3.8ms | Allocations: 62888)
+
+
+Processing by Api::V1::MoviesController#index as HTML
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  ↳ app/controllers/api/v1/movies_controller.rb:3:in `sort_by'
+Completed 204 No Content in 1626ms (ActiveRecord: 4.4ms | Allocations: 9287)
+
+
+Started GET "/api/v1/movies" for ::1 at 2020-09-25 13:30:07 -0400
+  [1m[35m (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::MoviesController#index as HTML
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  ↳ app/controllers/api/v1/movies_controller.rb:3:in `sort_by'
+  [1m[36mMovie Load (0.7ms)[0m  [1m[34mSELECT "movies".* FROM "movies" ORDER BY "movies"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ (byebug):1:in `index'
+Completed 204 No Content in 86439ms (ActiveRecord: 7.3ms | Allocations: 119071)
+
+
+Started GET "/api/v1/movies" for ::1 at 2020-09-25 13:32:15 -0400
+Processing by Api::V1::MoviesController#index as HTML
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  ↳ app/controllers/api/v1/movies_controller.rb:3:in `sort_by'
+Completed 500 Internal Server Error in 8506ms (ActiveRecord: 4.5ms | Allocations: 70338)
+
+
+  
+NameError (undefined local variable or method `movie' for #<Api::V1::MoviesController:0x00007fa88e918708>
+Did you mean?  movies):
+  
+app/controllers/api/v1/movies_controller.rb:7:in `index'
+Started GET "/favicon.ico" for ::1 at 2020-09-25 13:32:24 -0400
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+actionpack (6.0.3.3) lib/action_dispatch/middleware/debug_exceptions.rb:36:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.3.3) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.3.3) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.3.3) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.3.3) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.3.3) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.3.3) lib/rails/rack/logger.rb:26:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.3) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.3.3) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.3) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/host_authorization.rb:82:in `call'
+rack-cors (1.1.1) lib/rack/cors.rb:100:in `call'
+railties (6.0.3.3) lib/rails/engine.rb:527:in `call'
+puma (4.3.6) lib/puma/configuration.rb:228:in `call'
+puma (4.3.6) lib/puma/server.rb:713:in `handle_request'
+puma (4.3.6) lib/puma/server.rb:472:in `process_client'
+puma (4.3.6) lib/puma/server.rb:328:in `block in run'
+puma (4.3.6) lib/puma/thread_pool.rb:134:in `block in spawn_thread'
+Started GET "/api/v1/movies" for ::1 at 2020-09-25 13:32:32 -0400
+Processing by Api::V1::MoviesController#index as HTML
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  ↳ app/controllers/api/v1/movies_controller.rb:3:in `sort_by'
+Completed 500 Internal Server Error in 3326ms (ActiveRecord: 4.0ms | Allocations: 11716)
+
+
+  
+NoMethodError (undefined method `include' for #<Movie:0x00007fa88bc77dc0>):
+  
+app/controllers/api/v1/movies_controller.rb:7:in `index'
+Started GET "/api/v1/movies" for ::1 at 2020-09-25 13:33:43 -0400
+Processing by Api::V1::MoviesController#index as HTML
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  ↳ app/controllers/api/v1/movies_controller.rb:3:in `sort_by'
+Completed 500 Internal Server Error in 17ms (ActiveRecord: 3.6ms | Allocations: 9544)
+
+
+  
+NoMethodError (undefined method `include' for #<Movie:0x00007fa88ca21bb0>):
+  
+app/controllers/api/v1/movies_controller.rb:7:in `index'
+Started GET "/api/v1/movies" for ::1 at 2020-09-25 13:33:46 -0400
+Processing by Api::V1::MoviesController#index as HTML
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  ↳ app/controllers/api/v1/movies_controller.rb:3:in `sort_by'
+Completed 500 Internal Server Error in 7ms (ActiveRecord: 0.3ms | Allocations: 2542)
+
+
+  
+NoMethodError (undefined method `include' for #<Movie:0x00007fa88d3369f8>):
+  
+app/controllers/api/v1/movies_controller.rb:7:in `index'
+Started GET "/api/v1/movies" for ::1 at 2020-09-25 13:33:48 -0400
+Processing by Api::V1::MoviesController#index as HTML
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  ↳ app/controllers/api/v1/movies_controller.rb:3:in `sort_by'
+Completed 500 Internal Server Error in 6ms (ActiveRecord: 0.3ms | Allocations: 2543)
+
+
+  
+NoMethodError (undefined method `include' for #<Movie:0x00007fa88b2ea370>):
+  
+app/controllers/api/v1/movies_controller.rb:7:in `index'
+Started GET "/api/v1/movies" for ::1 at 2020-09-25 13:35:39 -0400
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::MoviesController#index as HTML
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  ↳ app/controllers/api/v1/movies_controller.rb:3:in `sort_by'
+Completed 200 OK in 15ms (Views: 0.8ms | ActiveRecord: 5.1ms | Allocations: 9545)
+
+
+Started GET "/api/v1/movies" for ::1 at 2020-09-25 13:38:43 -0400
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::MoviesController#index as HTML
+  [1m[36mMovie Load (0.7ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  ↳ app/controllers/api/v1/movies_controller.rb:3:in `sort_by'
+[active_model_serializers]   [1m[36mMovieActor Load (0.4ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 10]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.2ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 4]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.2ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 1]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.2ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 6]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.2ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 11]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.1ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 3]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.1ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 2]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers]   [1m[36mActor Load (0.3ms)[0m  [1m[34mSELECT "actors".* FROM "actors" WHERE "actors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:6:in `block in cast'
+[active_model_serializers]   [1m[36mActor Load (0.2ms)[0m  [1m[34mSELECT "actors".* FROM "actors" WHERE "actors"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:6:in `block in cast'
+[active_model_serializers]   [1m[36mActor Load (0.1ms)[0m  [1m[34mSELECT "actors".* FROM "actors" WHERE "actors"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:6:in `block in cast'
+[active_model_serializers]   [1m[36mMovieActor Load (0.1ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 5]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.1ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 7]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.1ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 8]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.1ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 9]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (40.73ms)
+Completed 200 OK in 65ms (Views: 42.0ms | ActiveRecord: 14.5ms | Allocations: 36850)
+
+
+Started GET "/api/v1/movies" for ::1 at 2020-09-25 13:39:07 -0400
+Processing by Api::V1::MoviesController#index as HTML
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  ↳ app/controllers/api/v1/movies_controller.rb:3:in `sort_by'
+[active_model_serializers]   [1m[36mMovieActor Load (0.1ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 10]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.1ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 4]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.1ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 1]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.1ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 6]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.1ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 11]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.1ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 3]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.1ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 2]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers]   [1m[36mActor Load (0.2ms)[0m  [1m[34mSELECT "actors".* FROM "actors" WHERE "actors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:6:in `block in cast'
+[active_model_serializers]   [1m[36mActor Load (0.2ms)[0m  [1m[34mSELECT "actors".* FROM "actors" WHERE "actors"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:6:in `block in cast'
+[active_model_serializers]   [1m[36mActor Load (0.1ms)[0m  [1m[34mSELECT "actors".* FROM "actors" WHERE "actors"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:6:in `block in cast'
+[active_model_serializers]   [1m[36mMovieActor Load (0.1ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 5]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.1ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 7]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.1ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 8]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.1ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 9]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (27.84ms)
+Completed 200 OK in 52ms (Views: 20.3ms | ActiveRecord: 12.4ms | Allocations: 29198)
+
+
+Started GET "/api/v1/movies/2" for ::1 at 2020-09-25 13:39:15 -0400
+  
+AbstractController::ActionNotFound (The action 'show' could not be found for Api::V1::MoviesController):
+  
+actionpack (6.0.3.3) lib/abstract_controller/base.rb:131:in `process'
+actionpack (6.0.3.3) lib/action_controller/metal.rb:190:in `dispatch'
+actionpack (6.0.3.3) lib/action_controller/metal.rb:254:in `dispatch'
+actionpack (6.0.3.3) lib/action_dispatch/routing/route_set.rb:50:in `dispatch'
+actionpack (6.0.3.3) lib/action_dispatch/routing/route_set.rb:33:in `serve'
+actionpack (6.0.3.3) lib/action_dispatch/journey/router.rb:49:in `block in serve'
+actionpack (6.0.3.3) lib/action_dispatch/journey/router.rb:32:in `each'
+actionpack (6.0.3.3) lib/action_dispatch/journey/router.rb:32:in `serve'
+actionpack (6.0.3.3) lib/action_dispatch/routing/route_set.rb:834:in `call'
+rack (2.2.3) lib/rack/etag.rb:27:in `call'
+rack (2.2.3) lib/rack/conditional_get.rb:27:in `call'
+rack (2.2.3) lib/rack/head.rb:12:in `call'
+activerecord (6.0.3.3) lib/active_record/migration.rb:567:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (6.0.3.3) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/actionable_exceptions.rb:17:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/debug_exceptions.rb:32:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.3.3) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.3.3) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.3.3) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.3.3) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.3.3) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.3.3) lib/rails/rack/logger.rb:26:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.3) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.3.3) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.3) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.3.3) lib/action_dispatch/middleware/host_authorization.rb:82:in `call'
+rack-cors (1.1.1) lib/rack/cors.rb:100:in `call'
+railties (6.0.3.3) lib/rails/engine.rb:527:in `call'
+puma (4.3.6) lib/puma/configuration.rb:228:in `call'
+puma (4.3.6) lib/puma/server.rb:713:in `handle_request'
+puma (4.3.6) lib/puma/server.rb:472:in `process_client'
+puma (4.3.6) lib/puma/server.rb:328:in `block in run'
+puma (4.3.6) lib/puma/thread_pool.rb:134:in `block in spawn_thread'
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (130.0ms)[0m  [1m[35mDROP DATABASE IF EXISTS "movies_api_development"[0m
+  [1m[35m (131.7ms)[0m  [1m[35mDROP DATABASE IF EXISTS "movies_api_test"[0m
+  [1m[35m (333.6ms)[0m  [1m[35mCREATE DATABASE "movies_api_development" ENCODING = 'unicode'[0m
+  [1m[35m (272.8ms)[0m  [1m[35mCREATE DATABASE "movies_api_test" ENCODING = 'unicode'[0m
+  [1m[35m (16.6ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (2.8ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_try_advisory_lock(6855664872665726250)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateMovies (20200921145332)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.8ms)[0m  [1m[35mCREATE TABLE "movies" ("id" bigserial primary key, "title" character varying, "year" integer, "score" integer, "imageUrl" character varying, "genre" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200921145332"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateActors (20200921200809)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "actors" ("id" bigserial primary key, "name" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200921200809"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateMovieActors (20200921200853)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.8ms)[0m  [1m[35mCREATE TABLE "movie_actors" ("id" bigserial primary key, "actor_id" bigint NOT NULL, "movie_id" bigint NOT NULL, "role" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_0b4046e48d"
+FOREIGN KEY ("actor_id")
+  REFERENCES "actors" ("id")
+, CONSTRAINT "fk_rails_a2d0458e32"
+FOREIGN KEY ("movie_id")
+  REFERENCES "movies" ("id")
+)[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE  INDEX  "index_movie_actors_on_actor_id" ON "movie_actors"  ("actor_id")[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE  INDEX  "index_movie_actors_on_movie_id" ON "movie_actors"  ("movie_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200921200853"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.9ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2020-09-25 18:04:42.570992"], ["updated_at", "2020-09-25 18:04:42.570992"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(6855664872665726250)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(6855664872665726250)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(6855664872665726250)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mActor Load (0.4ms)[0m  [1m[34mSELECT "actors".* FROM "actors"[0m
+  [1m[36mMovieActor Load (0.9ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (1.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "Jaws"], ["year", 1975], ["score", 19], ["imageUrl", "https://resizing.flixster.com/h8e7W7cVaQhuLdSvABDkJk6r5sc=/206x305/v1.bTsxMTE2NjE5OTtqOzE4MzU0OzEyMDA7ODAwOzEyMDA"], ["genre", "Horror"], ["created_at", "2020-09-25 18:07:46.228010"], ["updated_at", "2020-09-25 18:07:46.228010"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (0.3ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "The Matrix"], ["year", 1999], ["score", 18], ["imageUrl", "https://imgc.allpostersimages.com/img/print/u-g-F4S5W20.jpg?w=550&h=550&p=0"], ["genre", "Science Fiction"], ["created_at", "2020-09-25 18:07:46.234804"], ["updated_at", "2020-09-25 18:07:46.234804"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (0.3ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "The Goonies"], ["year", 1985], ["score", 0], ["imageUrl", "https://images-na.ssl-images-amazon.com/images/I/515DYf99zfL.jpg"], ["genre", "Adventure"], ["created_at", "2020-09-25 18:07:46.238298"], ["updated_at", "2020-09-25 18:07:46.238298"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "Free Willy"], ["year", 1993], ["score", 0], ["imageUrl", "https://upload.wikimedia.org/wikipedia/en/thumb/b/b5/Free_willy.jpg/220px-Free_willy.jpg"], ["genre", "Family"], ["created_at", "2020-09-25 18:07:46.241112"], ["updated_at", "2020-09-25 18:07:46.241112"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (0.3ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "Top Gun"], ["year", 1986], ["score", 0], ["imageUrl", "https://m.media-amazon.com/images/M/MV5BZjQxYTA3ODItNzgxMy00N2Y2LWJlZGMtMTRlM2JkZjI1ZDhhXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_.jpg"], ["genre", "Action"], ["created_at", "2020-09-25 18:07:46.260462"], ["updated_at", "2020-09-25 18:07:46.260462"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (0.5ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "Mean Girls"], ["year", 2004], ["score", 0], ["imageUrl", "https://img01.mgo-images.com/image/thumbnail?id=1MV270609a1c6c89af5538a6d63cea71ed4&ql=70&sizes=310x465"], ["genre", "Comedy"], ["created_at", "2020-09-25 18:07:46.263936"], ["updated_at", "2020-09-25 18:07:46.263936"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (0.3ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "Tron"], ["year", 2980], ["score", 0], ["imageUrl", "https://images-na.ssl-images-amazon.com/images/I/41npElxA48L._AC_.jpg"], ["genre", "Science Fiction"], ["created_at", "2020-09-25 18:07:46.268192"], ["updated_at", "2020-09-25 18:07:46.268192"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (0.3ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "What About Bob?"], ["year", 1991], ["score", 0], ["imageUrl", "https://www.movieartarena.com/imgs/wab.jpg"], ["genre", "Comedy"], ["created_at", "2020-09-25 18:07:46.271420"], ["updated_at", "2020-09-25 18:07:46.271420"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "Working Girl"], ["year", 1987], ["score", 99], ["imageUrl", "https://images-na.ssl-images-amazon.com/images/I/51X9TJrRBCL._AC_.jpg"], ["genre", "Drama"], ["created_at", "2020-09-25 18:07:46.274573"], ["updated_at", "2020-09-25 18:07:46.274573"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (0.3ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "Alien"], ["year", 1979], ["score", 0], ["imageUrl", "https://i.etsystatic.com/14461980/r/il/28c6d5/1417485862/il_570xN.1417485862_le2x.jpg"], ["genre", "Horror"], ["created_at", "2020-09-25 18:07:46.277449"], ["updated_at", "2020-09-25 18:07:46.277449"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovie Create (0.3ms)[0m  [1m[32mINSERT INTO "movies" ("title", "year", "score", "imageUrl", "genre", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "Predator"], ["year", 1986], ["score", 0], ["imageUrl", "https://movieposters2.com/images/1566923-b.jpg"], ["genre", "Horror"], ["created_at", "2020-09-25 18:07:46.280256"], ["updated_at", "2020-09-25 18:07:46.280256"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActor Create (0.5ms)[0m  [1m[32mINSERT INTO "actors" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Keanu Reeves"], ["created_at", "2020-09-25 18:07:46.288309"], ["updated_at", "2020-09-25 18:07:46.288309"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActor Create (0.2ms)[0m  [1m[32mINSERT INTO "actors" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Laurence Fishburn"], ["created_at", "2020-09-25 18:07:46.292304"], ["updated_at", "2020-09-25 18:07:46.292304"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActor Create (0.3ms)[0m  [1m[32mINSERT INTO "actors" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Carrie-Anne Moss"], ["created_at", "2020-09-25 18:07:46.295149"], ["updated_at", "2020-09-25 18:07:46.295149"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mMovie Load (0.2ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."title" = $1 LIMIT $2[0m  [["title", "The Matrix"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovieActor Create (1.1ms)[0m  [1m[32mINSERT INTO "movie_actors" ("actor_id", "movie_id", "role", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["actor_id", 1], ["movie_id", 2], ["role", "Neo"], ["created_at", "2020-09-25 18:07:46.308485"], ["updated_at", "2020-09-25 18:07:46.308485"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovieActor Create (0.5ms)[0m  [1m[32mINSERT INTO "movie_actors" ("actor_id", "movie_id", "role", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["actor_id", 2], ["movie_id", 2], ["role", "Morpheus"], ["created_at", "2020-09-25 18:07:46.313122"], ["updated_at", "2020-09-25 18:07:46.313122"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMovieActor Create (0.4ms)[0m  [1m[32mINSERT INTO "movie_actors" ("actor_id", "movie_id", "role", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["actor_id", 3], ["movie_id", 2], ["role", "Trinity"], ["created_at", "2020-09-25 18:07:46.316846"], ["updated_at", "2020-09-25 18:07:46.316846"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mMovie Load (0.6ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."title" = $1 LIMIT $2[0m  [["title", "The Matrix"], ["LIMIT", 1]]
+  [1m[36mActor Load (1.0ms)[0m  [1m[34mSELECT "actors".* FROM "actors" INNER JOIN "movie_actors" ON "actors"."id" = "movie_actors"."actor_id" WHERE "movie_actors"."movie_id" = $1 LIMIT $2[0m  [["movie_id", 2], ["LIMIT", 11]]
+  [1m[36mMovieActor Load (0.2ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1 LIMIT $2[0m  [["movie_id", 2], ["LIMIT", 11]]
+  [1m[36mActor Load (0.2ms)[0m  [1m[34mSELECT "actors".* FROM "actors" ORDER BY "actors"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mActor Load (0.2ms)[0m  [1m[34mSELECT "actors".* FROM "actors" ORDER BY "actors"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT "movies".* FROM "movies" INNER JOIN "movie_actors" ON "movies"."id" = "movie_actors"."movie_id" WHERE "movie_actors"."actor_id" = $1 LIMIT $2[0m  [["actor_id", 1], ["LIMIT", 11]]
+Started GET "/api/v1/movies/2" for ::1 at 2020-09-25 14:13:08 -0400
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::MoviesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/movies_controller.rb:21:in `show'
+[active_model_serializers] Rendered MovieSerializer with ActiveModelSerializers::Adapter::Attributes (0.49ms)
+Completed 200 OK in 43ms (Views: 25.0ms | ActiveRecord: 6.9ms | Allocations: 10165)
+
+
+Started GET "/api/v1/movies/2" for ::1 at 2020-09-25 14:13:34 -0400
+Processing by Api::V1::MoviesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mMovie Load (0.2ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/movies_controller.rb:21:in `show'
+[active_model_serializers] Rendered MovieSerializer with ActiveModelSerializers::Adapter::Attributes (0.31ms)
+Completed 200 OK in 17ms (Views: 1.6ms | ActiveRecord: 4.6ms | Allocations: 7923)
+
+
+Started GET "/api/v1/movies/2" for ::1 at 2020-09-25 14:15:40 -0400
+Processing by Api::V1::MoviesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mMovie Load (0.2ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/movies_controller.rb:21:in `show'
+[active_model_serializers]   [1m[36mMovieActor Load (0.4ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 2]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:5:in `map'
+[active_model_serializers]   [1m[36mActor Load (0.3ms)[0m  [1m[34mSELECT "actors".* FROM "actors" WHERE "actors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:6:in `block in cast'
+[active_model_serializers]   [1m[36mActor Load (0.3ms)[0m  [1m[34mSELECT "actors".* FROM "actors" WHERE "actors"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:6:in `block in cast'
+[active_model_serializers]   [1m[36mActor Load (0.2ms)[0m  [1m[34mSELECT "actors".* FROM "actors" WHERE "actors"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:6:in `block in cast'
+[active_model_serializers] Rendered MovieSerializer with ActiveModelSerializers::Adapter::Attributes (40.69ms)
+Completed 200 OK in 58ms (Views: 34.6ms | ActiveRecord: 12.1ms | Allocations: 22272)
+
+
+Started GET "/api/v1/movies/2" for ::1 at 2020-09-25 14:16:08 -0400
+Processing by Api::V1::MoviesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mMovie Load (0.2ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/movies_controller.rb:21:in `show'
+[active_model_serializers]   [1m[36mMovieActor Load (0.4ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 2]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:7:in `map'
+[active_model_serializers]   [1m[36mActor Load (0.3ms)[0m  [1m[34mSELECT "actors".* FROM "actors" WHERE "actors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:8:in `block in cast'
+[active_model_serializers]   [1m[36mActor Load (0.2ms)[0m  [1m[34mSELECT "actors".* FROM "actors" WHERE "actors"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:8:in `block in cast'
+[active_model_serializers]   [1m[36mActor Load (0.2ms)[0m  [1m[34mSELECT "actors".* FROM "actors" WHERE "actors"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:8:in `block in cast'
+[active_model_serializers]   [1m[36mActor Load (0.7ms)[0m  [1m[34mSELECT "actors".* FROM "actors" INNER JOIN "movie_actors" ON "actors"."id" = "movie_actors"."actor_id" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 2]]
+[active_model_serializers]   ↳ app/controllers/api/v1/movies_controller.rb:23:in `show'
+[active_model_serializers] No serializer found for resource: #<Actor id: 1, name: "Keanu Reeves", created_at: "2020-09-25 18:07:46", updated_at: "2020-09-25 18:07:46">
+[active_model_serializers] Rendered MovieSerializer with ActiveModelSerializers::Adapter::Attributes (32.66ms)
+Completed 200 OK in 58ms (Views: 33.0ms | ActiveRecord: 14.7ms | Allocations: 25409)
+
+
+Started GET "/api/v1/movies/" for ::1 at 2020-09-25 14:17:53 -0400
+Processing by Api::V1::MoviesController#index as HTML
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  ↳ app/controllers/api/v1/movies_controller.rb:3:in `sort_by'
+[active_model_serializers]   [1m[36mActor Load (0.3ms)[0m  [1m[34mSELECT "actors".* FROM "actors" INNER JOIN "movie_actors" ON "actors"."id" = "movie_actors"."actor_id" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 10]]
+[active_model_serializers]   ↳ app/controllers/api/v1/movies_controller.rb:6:in `index'
+[active_model_serializers]   [1m[36mActor Load (0.3ms)[0m  [1m[34mSELECT "actors".* FROM "actors" INNER JOIN "movie_actors" ON "actors"."id" = "movie_actors"."actor_id" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 4]]
+[active_model_serializers]   ↳ app/controllers/api/v1/movies_controller.rb:6:in `index'
+[active_model_serializers]   [1m[36mActor Load (0.4ms)[0m  [1m[34mSELECT "actors".* FROM "actors" INNER JOIN "movie_actors" ON "actors"."id" = "movie_actors"."actor_id" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 1]]
+[active_model_serializers]   ↳ app/controllers/api/v1/movies_controller.rb:6:in `index'
+[active_model_serializers]   [1m[36mActor Load (0.3ms)[0m  [1m[34mSELECT "actors".* FROM "actors" INNER JOIN "movie_actors" ON "actors"."id" = "movie_actors"."actor_id" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 6]]
+[active_model_serializers]   ↳ app/controllers/api/v1/movies_controller.rb:6:in `index'
+[active_model_serializers]   [1m[36mActor Load (0.5ms)[0m  [1m[34mSELECT "actors".* FROM "actors" INNER JOIN "movie_actors" ON "actors"."id" = "movie_actors"."actor_id" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 11]]
+[active_model_serializers]   ↳ app/controllers/api/v1/movies_controller.rb:6:in `index'
+[active_model_serializers]   [1m[36mActor Load (0.6ms)[0m  [1m[34mSELECT "actors".* FROM "actors" INNER JOIN "movie_actors" ON "actors"."id" = "movie_actors"."actor_id" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 3]]
+[active_model_serializers]   ↳ app/controllers/api/v1/movies_controller.rb:6:in `index'
+[active_model_serializers]   [1m[36mActor Load (0.3ms)[0m  [1m[34mSELECT "actors".* FROM "actors" INNER JOIN "movie_actors" ON "actors"."id" = "movie_actors"."actor_id" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 2]]
+[active_model_serializers]   ↳ app/controllers/api/v1/movies_controller.rb:6:in `index'
+[active_model_serializers] No serializer found for resource: #<Actor id: 1, name: "Keanu Reeves", created_at: "2020-09-25 18:07:46", updated_at: "2020-09-25 18:07:46">
+[active_model_serializers]   [1m[36mActor Load (0.2ms)[0m  [1m[34mSELECT "actors".* FROM "actors" INNER JOIN "movie_actors" ON "actors"."id" = "movie_actors"."actor_id" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 5]]
+[active_model_serializers]   ↳ app/controllers/api/v1/movies_controller.rb:6:in `index'
+[active_model_serializers]   [1m[36mActor Load (0.3ms)[0m  [1m[34mSELECT "actors".* FROM "actors" INNER JOIN "movie_actors" ON "actors"."id" = "movie_actors"."actor_id" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 7]]
+[active_model_serializers]   ↳ app/controllers/api/v1/movies_controller.rb:6:in `index'
+[active_model_serializers]   [1m[36mActor Load (0.2ms)[0m  [1m[34mSELECT "actors".* FROM "actors" INNER JOIN "movie_actors" ON "actors"."id" = "movie_actors"."actor_id" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 8]]
+[active_model_serializers]   ↳ app/controllers/api/v1/movies_controller.rb:6:in `index'
+[active_model_serializers]   [1m[36mActor Load (0.2ms)[0m  [1m[34mSELECT "actors".* FROM "actors" INNER JOIN "movie_actors" ON "actors"."id" = "movie_actors"."actor_id" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 9]]
+[active_model_serializers]   ↳ app/controllers/api/v1/movies_controller.rb:6:in `index'
+[active_model_serializers]   [1m[36mMovieActor Load (0.3ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 10]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:7:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.5ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 4]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:7:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.3ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 1]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:7:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.4ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 6]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:7:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.2ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 11]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:7:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.2ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 3]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:7:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.2ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 2]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:7:in `map'
+[active_model_serializers]   [1m[36mActor Load (0.2ms)[0m  [1m[34mSELECT "actors".* FROM "actors" WHERE "actors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:8:in `block in cast'
+[active_model_serializers]   [1m[36mActor Load (0.1ms)[0m  [1m[34mSELECT "actors".* FROM "actors" WHERE "actors"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:8:in `block in cast'
+[active_model_serializers]   [1m[36mActor Load (0.1ms)[0m  [1m[34mSELECT "actors".* FROM "actors" WHERE "actors"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:8:in `block in cast'
+[active_model_serializers] No serializer found for resource: #<Actor id: 1, name: "Keanu Reeves", created_at: "2020-09-25 18:07:46", updated_at: "2020-09-25 18:07:46">
+[active_model_serializers]   [1m[36mMovieActor Load (0.1ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 5]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:7:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.1ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 7]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:7:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.2ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 8]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:7:in `map'
+[active_model_serializers]   [1m[36mMovieActor Load (0.2ms)[0m  [1m[34mSELECT "movie_actors".* FROM "movie_actors" WHERE "movie_actors"."movie_id" = $1[0m  [["movie_id", 9]]
+[active_model_serializers]   ↳ app/serializers/movie_serializer.rb:7:in `map'
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (85.41ms)
+Completed 200 OK in 87ms (Views: 79.2ms | ActiveRecord: 7.0ms | Allocations: 31012)
+
+
