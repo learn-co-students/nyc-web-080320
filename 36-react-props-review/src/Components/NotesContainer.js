@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import Note from './Note'
 class NotesContainer extends Component {
+    //lifecycle methods 
+    // constructor(){
+    //     super()
+    // }
 
     apiResponse = () => {
         return ["First Note", "Second Note", "Third Note", "Fourth Note"]
