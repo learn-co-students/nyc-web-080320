@@ -1,5 +1,20 @@
 # react-props-practice1
 
+# Questions:
+- class based vs functional components
+- Modularizing code 
+    - separation of concerns
+    - single source of truth
+    - reusability
+- 
+
+
+
+
+
+
+
+
 ## Instructions:
 
 - Fork and Clone this lab and add your instructor as a collaborator. Then read the below deliverables and make all necessary changes to the app to get it to work. 
