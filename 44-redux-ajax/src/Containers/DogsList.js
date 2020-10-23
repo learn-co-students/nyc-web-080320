@@ -48,4 +48,4 @@ function msp(state) {
 
 
 // export default withRouter(DogsList)
-export default connect(msp, mdp)(DogList);
+export default connect(msp)(DogList);
