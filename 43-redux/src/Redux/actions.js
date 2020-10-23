@@ -4,7 +4,7 @@
 export function getDogs() {
     // 1. Wait
     // thunk 
-    return function () {
+    function () {
         //execute our "true" dispatch
         fetch("http://localhost:5000/apiResponse")
             .then(res => res.json())
@@ -12,7 +12,6 @@ export function getDogs() {
             .catch(console.log)
     }
 
-    return { payload: api }
     // how can we make the dispatch wait? 
 
 }

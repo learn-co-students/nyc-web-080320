@@ -8,7 +8,7 @@ import rootReducer from './Redux/reducer'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-let store = createStore(rootReducer)
+let store = createStore(rootReducer, applyMiddleware(thunk))
 
 // store !== state
 // dispatch

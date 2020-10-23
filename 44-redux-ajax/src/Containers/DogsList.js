@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux'
 import DogCard from '../Components/DogCard'
 import SearchForm from "../Components/SearchForm";
 
@@ -17,7 +18,7 @@ class DogList extends Component {
   }
 
   render() {
-    // console.log("api", apiResponse)
+    console.log("DogsList Props: ", this.props)
     return (
       <>
         <SearchForm searchTerm={this.state.searchTerm} changeHandler={this.searchChangeHandler} />
@@ -26,5 +27,25 @@ class DogList extends Component {
     );
   }
 }
+// mapDispatchToProps => to give a component a callback to change state 
 
-export default DogList;
+// mapStateToProps => to give a component access to some piece of state => subscribe
+function msp(state) {
+  return { dogs: state.api }
+}
+
+// Higher Order Components 
+
+// function connect(msp, mdp){
+//     let mspProps = msp()
+
+//     function renderNewDogsList(DogsList){
+//       Doglist => newProps => {...props, mspProps }
+//       return <DogsList/>
+//      }
+
+// }
+
+
+// export default withRouter(DogsList)
+export default connect(msp, mdp)(DogList);

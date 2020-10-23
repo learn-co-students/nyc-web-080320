@@ -8,10 +8,7 @@ import Favorites from './Containers/Favorites'
 class App extends Component {
 
   componentDidMount() {
-
     this.props.getDogs()
-
-
   }
   submitHandler = (dogObj) => {
     console.log("submitting", dogObj)
@@ -68,9 +65,9 @@ class App extends Component {
     console.log("App:", this.props)
     return (
       <div className="app">
-        {/* <CreateForm submitHandler={this.submitHandler} />
-        <DogsList dogs={this.state.api} clickHandler={this.addToFavoritesClickHandler} />
-        <Favorites dogs={this.renderFavorites()} /> */}
+        {/* <CreateForm submitHandler={this.submitHandler} /> */}
+        <DogsList />
+        {/* <Favorites  /> */}
       </div>
     );
   }
@@ -80,7 +77,6 @@ class App extends Component {
 function mdp(dispatch) {
   return { getDogs: () => dispatch(getDogs()) }
 }
-
 
 
 export default connect(null, mdp)(App);
